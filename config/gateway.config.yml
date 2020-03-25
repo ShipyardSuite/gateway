@@ -36,7 +36,7 @@ apiEndpoints:
 serviceEndpoints:
     
     status:
-        url: 'http://localhost:3088'
+        url: 'http://localhost:3333'
 
     homepage:
         url: 'http://localhost:3001'

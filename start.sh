@@ -12,11 +12,11 @@ docker network prune
 docker network create gateway
 
 # start dependencies
-docker run --name mongo --network gateway -d mongo:3
+docker run -d --network gateway -p 27017-27017:27017-27017 --name mongo mongo:3
 docker run --name redis --network gateway -d redis
 
 # start containers
-# docker run --name notfound --network gateway -e SERVICE_PORT=3003 -p 3003:3003 -d shipyardsuite/notfound:develop
+docker run --name notfound --network gateway -e SERVICE_PORT=3003 -p 3003:3003 -d shipyardsuite/notfound:develop
 
 # stop gateway
 kill $(lsof -t -i:8080)
