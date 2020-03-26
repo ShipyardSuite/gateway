@@ -11,7 +11,7 @@ apiEndpoints:
 
     homepage:
         host: '*'
-        paths: [ '/homepage/*', '/homepage/uploads/*', /homepage/images/*]
+        paths: [ '/', /homepage/*, '/homepage/images/*' ]
 
     auth:
         host: '*'
@@ -23,7 +23,7 @@ apiEndpoints:
 
     dashboard:
         host: '*'
-        paths: [ '/dashboard/*', '/dashboard/api/*', '/dashboard/uploads/*', /dashboard/images/*]
+        paths: [ '/dashboard/*', '/dashboard/api/*', '/dashboard/uploads/*', '/dashboard/images/*']
 
     user:
         host: '*'
