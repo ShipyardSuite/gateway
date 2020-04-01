@@ -5,56 +5,63 @@ admin:
     host: localhost
 apiEndpoints:
 
-    status:
-        host: '*'
-        paths: [ '/status/*', '/status/api/*', '/status/uploads/*', /status/images/*]
-
     homepage:
         host: '*'
-        paths: [ '/', /homepage/*, '/homepage/images/*' ]
+        paths: [ '/', '/homepage/*' ]
 
     auth:
         host: '*'
-        paths: [ '/auth/*', '/auth/api/*' ]
+        paths: [ '/auth/*' ]
+
+    dashboard:
+        host: '*'
+        paths: [ '/dashboard/*' ]
 
     notfound:
         host: '*'
         paths: [ '/notfound/*' ]
 
-    dashboard:
+    player:
         host: '*'
-        paths: [ '/dashboard/*', '/dashboard/api/*', '/dashboard/uploads/*', '/dashboard/images/*']
-
-    user:
-        host: '*'
-        paths: [ '/user/*', '/user/api/*' ]
+        paths: [ '/player/*' ]
 
     project:
         host: '*'
-        paths: [ '/project/*', '/project/api/*' ]
+        paths: [ '/project/*' ]
+
+    status:
+        host: '*'
+        paths: [ '/status/*' ]
+
+    user:
+        host: '*'
+        paths: [ '/user/*' ]
         
 serviceEndpoints:
-    
-    status:
-        url: 'http://localhost:3333'
 
     homepage:
         url: 'http://localhost:3001'
-        
+
     auth:
         url: 'http://localhost:3002'
 
-    notfound:
-        url: 'http://localhost:3003'
-
     dashboard:
         url: 'http://localhost:3004'
-    
-    user:
+
+    notfound:
         url: 'http://localhost:3005'
-    
-    project:
+
+    player:
         url: 'http://localhost:3006'
+
+    project:
+        url: 'http://localhost:3007'
+
+    status:
+        url: 'http://localhost:3008'
+
+    user:
+        url: 'http://localhost:3009'
 
 policies:
     - basic-auth
@@ -66,15 +73,6 @@ policies:
     - proxy
     - rate-limit
 pipelines:
- 
-    status:
-        apiEndpoints:
-            - status
-        policies:
-            - proxy:
-                - action:
-                    serviceEndpoint: status
-                    changeOrigin: true
 
     homepage:
         apiEndpoints:
@@ -94,15 +92,6 @@ pipelines:
                     serviceEndpoint: auth
                     changeOrigin: true
 
-    notfound:
-        apiEndpoints:
-            - notfound
-        policies:
-            - proxy:
-                - action:
-                    serviceEndpoint: notfound
-                    changeOrigin: true
-
     dashboard:
         apiEndpoints:
             - dashboard
@@ -112,13 +101,22 @@ pipelines:
                     serviceEndpoint: dashboard
                     changeOrigin: true
 
-    user:
+    notfound:
         apiEndpoints:
-            - user
+            - notfound
         policies:
             - proxy:
                 - action:
-                    serviceEndpoint: user
+                    serviceEndpoint: notfound
+                    changeOrigin: true
+
+    player:
+        apiEndpoints:
+            - player
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: player
                     changeOrigin: true
 
     project:
@@ -128,4 +126,22 @@ pipelines:
             - proxy:
                 - action:
                     serviceEndpoint: project
+                    changeOrigin: true
+
+    status:
+        apiEndpoints:
+            - status
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: status
+                    changeOrigin: true
+
+    user:
+        apiEndpoints:
+            - user 
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: user
                     changeOrigin: true
