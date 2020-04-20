@@ -13,6 +13,10 @@ apiEndpoints:
         host: '*'
         paths: [ '/auth/*' ]
 
+    documentation:
+        host: '*'
+        paths: [ '/documentation/*' ]
+
     dashboard:
         host: '*'
         paths: [ '/dashboard/*' ]
@@ -36,7 +40,7 @@ apiEndpoints:
     user:
         host: '*'
         paths: [ '/user/*' ]
-        
+
 serviceEndpoints:
 
     homepage:
@@ -44,6 +48,9 @@ serviceEndpoints:
 
     auth:
         url: 'http://localhost:3002'
+
+    documentation:
+        url: 'http://localhost:3003'
 
     dashboard:
         url: 'http://localhost:3004'
@@ -90,6 +97,15 @@ pipelines:
             - proxy:
                 - action:
                     serviceEndpoint: auth
+                    changeOrigin: true
+
+    documentation:
+        apiEndpoints:
+            - documentation
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: documentation
                     changeOrigin: true
 
     dashboard:
