@@ -1,0 +1,193 @@
+version: "3"
+services:
+    redis:
+        image: redis
+        container_name: redis
+        ports:
+            - "6379:6379"
+        networks:
+            - gateway
+
+    mongo:
+        image: mongo:3
+        container_name: mongo
+        command: mongod --smallfiles --bind_ip_all
+        volumes:
+            - ./data:/data/db
+        ports:
+            - "27017:27017"
+        networks:
+            - gateway
+
+    auth:
+        build:
+            context: ./services/auth
+            dockerfile: Dockerfile
+        command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+        container_name: auth
+        ports:
+            - "3001:3001"
+        networks:
+            - gateway
+        volumes:
+            - ./:/usr/src/app
+        working_dir: /usr/src/app
+        environment:
+            SERVICE_PORT: 3001
+            SERVICE_NAME: auth
+
+    # connection:
+    #     build:
+    #         context: ./services/connection
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: connection
+    #     ports:
+    #         - "3002:3002"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3002
+    #         SERVICE_NAME: connection
+
+    dashboard:
+        build:
+            context: ./services/dashboard
+            dockerfile: Dockerfile
+        command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+        container_name: dashboard
+        ports:
+            - "3003:3003"
+        networks:
+            - gateway
+        volumes:
+            - ./:/usr/src/app
+        working_dir: /usr/src/app
+        environment:
+            SERVICE_PORT: 3003
+            SERVICE_NAME: dashboard
+
+    homepage:
+        build:
+            context: ./services/homepage
+            dockerfile: Dockerfile
+        command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+        container_name: homepage
+        ports:
+            - "3004:3004"
+        networks:
+            - gateway
+        volumes:
+            - ./:/usr/src/app
+        working_dir: /usr/src/app
+        environment:
+            SERVICE_PORT: 3004
+            SERVICE_NAME: homepage
+
+    # logger:
+    #     build:
+    #         context: ./services/logger
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: logger
+    #     ports:
+    #         - "3005:3005"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3005
+    #         SERVICE_NAME: logger
+
+    # notfound:
+    #     build:
+    #         context: ./services/notfound
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: notfound
+    #     ports:
+    #         - "3006:3006"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3006
+    #         SERVICE_NAME: notfound
+
+    # player:
+    #     build:
+    #         context: ./services/player
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: player
+    #     ports:
+    #         - "3007:3007"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3007
+    #         SERVICE_NAME: player
+
+    # project:
+    #     build:
+    #         context: ./services/project
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: project
+    #     ports:
+    #         - "3008:3008"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3008
+    #         SERVICE_NAME: project
+
+    # status:
+    #     build:
+    #         context: ./services/auth
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/auth && npm install; npm run build; npm run start'
+    #     container_name: status
+    #     ports:
+    #         - "3009:3009"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3009
+    #         SERVICE_NAME: status
+
+    # user:
+    #     build:
+    #         context: ./services/user
+    #         dockerfile: Dockerfile
+    #     command: /bin/bash -c 'cd ./services/user && npm install; npm run start:dev'
+    #     container_name: user
+    #     ports:
+    #         - "3010:3010"
+    #     networks:
+    #         - gateway
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     environment:
+    #         SERVICE_PORT: 3010
+    #         SERVICE_NAME: user
+
+networks:
+    gateway:
