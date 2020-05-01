@@ -2,12 +2,12 @@ http:
     port: 8080
 admin:
     port: 9876
-    host: localhost
+    host: 0.0.0.0
 apiEndpoints:
 
     homepage:
         host: '*'
-        paths: [ '/', '/homepage/*' ]
+        paths: [ '/', '/homepage/*', '/homepage/images/*' ]
 
     auth:
         host: '*'
@@ -37,32 +37,37 @@ apiEndpoints:
         host: '*'
         paths: [ '/user/*' ]
 
+    api:
+        host: '*'
+        paths: '/ip'
 serviceEndpoints:
 
     homepage:
-        url: 'http://localhost:3001'
+        url: 'http://homepage:3001'
 
     auth:
-        url: 'http://localhost:3002'
+        url: 'http://auth:3002'
 
     documentation:
-        url: 'http://localhost:3003'
+        url: 'http://documentation:3003'
 
     dashboard:
-        url: 'http://localhost:3004'
+        url: 'http://dashboard:3004'
 
     player:
-        url: 'http://localhost:3006'
+        url: 'http://player:3006'
 
     project:
-        url: 'http://localhost:3007'
+        url: 'http://project:3007'
 
     status:
-        url: 'http://localhost:3008'
+        url: 'http://status:3008'
 
     user:
-        url: 'http://localhost:3009'
+        url: 'http://user:3009'
 
+    httpbin:
+        url: 'https://httpbin.org'
 policies:
     - basic-auth
     - cors
@@ -144,4 +149,13 @@ pipelines:
             - proxy:
                 - action:
                     serviceEndpoint: user
+                    changeOrigin: true
+
+    basic:
+        apiEndpoints:
+            - api
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: httpbin
                     changeOrigin: true
