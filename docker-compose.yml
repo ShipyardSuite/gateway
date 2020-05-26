@@ -141,7 +141,7 @@ services:
 
     project:
         image: shipyardsuite/project:develop
-        command: sh -c 'npm run start:dev'
+        command: sh -c 'npm run start'
         container_name: project
         ports:
             - "3007:3007"
