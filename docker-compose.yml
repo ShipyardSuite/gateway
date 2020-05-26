@@ -122,9 +122,26 @@ services:
             timeout: 10s
             retries: 3
 
+    status:
+        image: shipyardsuite/status:develop
+        command: sh -c 'npm run start:dev'
+        container_name: status
+        ports:
+            - "3008:3008"
+        networks:
+            - gateway
+        environment:
+            SERVICE_NAME: status
+            SERVICE_PORT: 3008
+        healthcheck:
+            test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_STATUS} || exit 1
+            interval: 20s
+            timeout: 10s
+            retries: 3
+
     player:
         image: shipyardsuite/player:develop
-        command: sh -c 'npm run start:dev'
+        command: sh -c 'npm run start'
         container_name: player
         ports:
             - "3006:3006"
@@ -152,23 +169,6 @@ services:
             SERVICE_PORT: 3007
         healthcheck:
             test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_PROJECT} || exit 1
-            interval: 20s
-            timeout: 10s
-            retries: 3
-
-    status:
-        image: shipyardsuite/status:develop
-        command: sh -c 'npm run start:dev'
-        container_name: status
-        ports:
-            - "3008:3008"
-        networks:
-            - gateway
-        environment:
-            SERVICE_NAME: status
-            SERVICE_PORT: 3008
-        healthcheck:
-            test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_STATUS} || exit 1
             interval: 20s
             timeout: 10s
             retries: 3
