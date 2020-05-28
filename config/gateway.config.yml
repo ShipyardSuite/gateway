@@ -7,7 +7,7 @@ apiEndpoints:
 
     homepage:
         host: '*'
-        paths: [ '/', '/homepage/*', '/homepage/images/*' ]
+        paths: [ '/', '/homepage/*', '/blog/*', '/blog', '/features', '/homepage/*/*' ]
 
     auth:
         host: '*'

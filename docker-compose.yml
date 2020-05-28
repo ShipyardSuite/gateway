@@ -56,7 +56,7 @@ services:
 
     homepage:
         image: shipyardsuite/homepage:develop
-        command: sh -c 'npm run start:dev'
+        command: sh -c 'npm run start'
         container_name: homepage
         ports:
             - "3001:3001"
