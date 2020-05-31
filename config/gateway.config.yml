@@ -4,70 +4,47 @@ admin:
     port: 9876
     host: 0.0.0.0
 apiEndpoints:
-
     homepage:
         host: '*'
         paths: [ '/', '/homepage/*', '/blog/*', '/blog', '/features', '/homepage/*/*' ]
-
     auth:
         host: '*'
         paths: [ '/auth/*' ]
-
     documentation:
         host: '*'
         paths: [ '/documentation/*', '/documentation/*/*'  ]
-
     dashboard:
         host: '*'
         paths: [ '/dashboard/*' ]
-
     player:
         host: '*'
         paths: [ '/player/*' ]
-
     project:
         host: '*'
         paths: [ '/project/*' ]
-
     status:
         host: '*'
         paths: [ '/status/*' ]
-
     user:
         host: '*'
         paths: [ '/user/*' ]
-
-    api:
-        host: '*'
-        paths: '/ip'
 serviceEndpoints:
-
     homepage:
         url: 'http://homepage:3001'
-
     auth:
         url: 'http://auth:3002'
-
     documentation:
         url: 'http://documentation:3003'
-
     dashboard:
         url: 'http://dashboard:3004'
-
     player:
         url: 'http://player:3006'
-
     project:
         url: 'http://project:3007'
-
     status:
         url: 'http://status:3008'
-
     user:
         url: 'http://user:3009'
-
-    httpbin:
-        url: 'https://httpbin.org'
 policies:
     - basic-auth
     - cors
@@ -78,7 +55,6 @@ policies:
     - proxy
     - rate-limit
 pipelines:
-
     homepage:
         apiEndpoints:
             - homepage
@@ -87,7 +63,6 @@ pipelines:
                 - action:
                     serviceEndpoint: homepage
                     changeOrigin: true
-
     auth:
         apiEndpoints:
             - auth
@@ -96,7 +71,6 @@ pipelines:
                 - action:
                     serviceEndpoint: auth
                     changeOrigin: true
-
     documentation:
         apiEndpoints:
             - documentation
@@ -105,7 +79,6 @@ pipelines:
                 - action:
                     serviceEndpoint: documentation
                     changeOrigin: true
-
     dashboard:
         apiEndpoints:
             - dashboard
@@ -114,7 +87,6 @@ pipelines:
                 - action:
                     serviceEndpoint: dashboard
                     changeOrigin: true
-
     player:
         apiEndpoints:
             - player
@@ -123,7 +95,6 @@ pipelines:
                 - action:
                     serviceEndpoint: player
                     changeOrigin: true
-
     project:
         apiEndpoints:
             - project
@@ -132,7 +103,6 @@ pipelines:
                 - action:
                     serviceEndpoint: project
                     changeOrigin: true
-
     status:
         apiEndpoints:
             - status
@@ -141,21 +111,11 @@ pipelines:
                 - action:
                     serviceEndpoint: status
                     changeOrigin: true
-
     user:
         apiEndpoints:
-            - user 
+            - user
         policies:
             - proxy:
                 - action:
                     serviceEndpoint: user
-                    changeOrigin: true
-
-    basic:
-        apiEndpoints:
-            - api
-        policies:
-            - proxy:
-                - action:
-                    serviceEndpoint: httpbin
                     changeOrigin: true
