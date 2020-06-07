@@ -22,9 +22,6 @@ apiEndpoints:
     project:
         host: '*'
         paths: [ '/project/*' ]
-    status:
-        host: '*'
-        paths: [ '/status/*' ]
     user:
         host: '*'
         paths: [ '/user/*' ]
@@ -41,8 +38,6 @@ serviceEndpoints:
         url: 'http://player:3006'
     project:
         url: 'http://project:3007'
-    status:
-        url: 'http://status:3008'
     user:
         url: 'http://user:3009'
 policies:
@@ -102,14 +97,6 @@ pipelines:
             - proxy:
                 - action:
                     serviceEndpoint: project
-                    changeOrigin: true
-    status:
-        apiEndpoints:
-            - status
-        policies:
-            - proxy:
-                - action:
-                    serviceEndpoint: status
                     changeOrigin: true
     user:
         apiEndpoints:
