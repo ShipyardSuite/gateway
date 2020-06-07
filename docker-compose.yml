@@ -65,6 +65,7 @@ services:
         environment:
             SERVICE_NAME: homepage
             SERVICE_PORT: 3001
+            PRELAUNCH_ACTIVE: "false"
         healthcheck:
             test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_HOMEPAGE} || exit 1
             interval: 20s
@@ -118,23 +119,6 @@ services:
             SERVICE_PORT: 3004
         healthcheck:
             test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_DASHBOARD} || exit 1
-            interval: 20s
-            timeout: 10s
-            retries: 3
-
-    status:
-        image: shipyardsuite/status:develop
-        command: sh -c 'npm run start:dev'
-        container_name: status
-        ports:
-            - "3008:3008"
-        networks:
-            - gateway
-        environment:
-            SERVICE_NAME: status
-            SERVICE_PORT: 3008
-        healthcheck:
-            test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID_STATUS} || exit 1
             interval: 20s
             timeout: 10s
             retries: 3
